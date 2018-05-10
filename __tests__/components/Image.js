@@ -1,10 +1,17 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
 import Image from '../../src/components/Image';
+import StyleSheet from '../../src/stylesheet';
 
 describe('<Image />', () => {
   it('renders children', () => {
-    const tree = renderer.create(<Image source="foo"><foo /></Image>).toJSON();
+    const tree = renderer
+      .create(
+        <Image source="foo">
+          <foo />
+        </Image>,
+      )
+      .toJSON();
 
     expect(tree).toMatchSnapshot();
   });
@@ -20,20 +27,6 @@ describe('<Image />', () => {
 
     it('defaults to Image', () => {
       const tree = renderer.create(<Image source="foo" />).toJSON();
-
-      expect(tree).toMatchSnapshot();
-    });
-  });
-
-  describe('source', () => {
-    it('prefers source over defaultSource', () => {
-      const tree = renderer.create(<Image source="foo" defaultSource="bar" />).toJSON();
-
-      expect(tree).toMatchSnapshot();
-    });
-
-    it('falls back to defaultSource if available', () => {
-      const tree = renderer.create(<Image defaultSource="foo" />).toJSON();
 
       expect(tree).toMatchSnapshot();
     });
@@ -100,6 +93,18 @@ describe('<Image />', () => {
   });
 
   describe('source', () => {
+    it('prefers source over defaultSource', () => {
+      const tree = renderer.create(<Image source="foo" defaultSource="bar" />).toJSON();
+
+      expect(tree).toMatchSnapshot();
+    });
+
+    it('falls back to defaultSource if available', () => {
+      const tree = renderer.create(<Image defaultSource="foo" />).toJSON();
+
+      expect(tree).toMatchSnapshot();
+    });
+
     it('sets height from source', () => {
       const tree = renderer.create(<Image source={{ uri: 'foo', height: 500 }} />).toJSON();
 
@@ -124,6 +129,32 @@ describe('<Image />', () => {
       const tree = renderer
         .create(<Image source={{ uri: 'foo', width: 500 }} style={{ height: 400, width: 300 }} />)
         .toJSON();
+
+      expect(tree).toMatchSnapshot();
+    });
+  });
+
+  describe('style', () => {
+    const styles = StyleSheet.create({
+      view: {
+        flex: 1,
+      },
+    });
+
+    it('accepts a plain object', () => {
+      const tree = renderer.create(<Image style={{ flex: 1 }} />).toJSON();
+
+      expect(tree).toMatchSnapshot();
+    });
+
+    it('accepts a StyleSheet ordinal', () => {
+      const tree = renderer.create(<Image style={styles.view} />).toJSON();
+
+      expect(tree).toMatchSnapshot();
+    });
+
+    it('accepts an array of plain objects and/or StyleSheet ordinals', () => {
+      const tree = renderer.create(<Image style={[{ flexGrow: 1 }, styles.view]} />).toJSON();
 
       expect(tree).toMatchSnapshot();
     });

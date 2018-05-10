@@ -2,8 +2,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import StyleSheet from '../stylesheet';
-import ViewStylePropTypes from './ViewStylePropTypes';
 import ResizingConstraintPropTypes from './ResizingConstraintPropTypes';
+import ResizeModePropTypes from './ResizeModePropTypes';
+import ImageStylePropTypes from './ImageStylePropTypes';
 
 const ImageURISourcePropType = PropTypes.shape({
   uri: PropTypes.string.isRequired,
@@ -23,25 +24,19 @@ export const ImageSourcePropType = PropTypes.oneOfType([
   PropTypes.string,
 ]);
 
-const ResizeModePropType = PropTypes.oneOf([
-  'contain',
-  'cover',
-  'stretch',
-  'center',
-  'repeat',
-  'none',
-]);
-
 const propTypes = {
   name: PropTypes.string,
-  children: PropTypes.any,
+  children: PropTypes.node,
   defaultSource: ImageSourcePropType,
-  resizeMode: ResizeModePropType,
+  resizeMode: ResizeModePropTypes,
   source: ImageSourcePropType,
-  style: PropTypes.shape({
-    ...ViewStylePropTypes,
-    resizeMode: ResizeModePropType,
-  }),
+  style: PropTypes.oneOfType([
+    PropTypes.shape(ImageStylePropTypes),
+    PropTypes.arrayOf(
+      PropTypes.oneOfType([PropTypes.shape(ImageStylePropTypes), PropTypes.number]),
+    ),
+    PropTypes.number,
+  ]),
   resizingConstraint: PropTypes.shape({
     ...ResizingConstraintPropTypes,
   }),
@@ -56,6 +51,7 @@ const ResizeModes = {
   none: 'Fill',
 };
 
+// $FlowFixMe
 class Image extends React.Component {
   static defaultProps = {
     name: 'Image',
@@ -63,18 +59,12 @@ class Image extends React.Component {
 
   render() {
     const {
-      children,
-      source,
-      defaultSource,
-      resizeMode,
-      name,
-      resizingConstraint,
+      children, source, defaultSource, resizeMode, name, resizingConstraint,
     } = this.props;
 
     let style = StyleSheet.flatten(this.props.style) || {};
 
-    const sketchResizeMode =
-      ResizeModes[resizeMode || (style && style.resizeMode) || 'cover'];
+    const sketchResizeMode = ResizeModes[resizeMode || (style && style.resizeMode) || 'cover'];
     if (source && typeof source !== 'string') {
       style = {
         height: source.height,

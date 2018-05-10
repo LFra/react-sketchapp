@@ -29,18 +29,6 @@ const treeRootStub = {
     {
       type: 'view',
       props: {
-        name: 'Layer 2',
-        style: {
-          height: 200,
-          position: 'absolute',
-          width: 200,
-          zIndex: 2,
-        },
-      },
-    },
-    {
-      type: 'view',
-      props: {
         name: 'Layer 3',
         style: {
           height: 300,
@@ -50,17 +38,25 @@ const treeRootStub = {
         },
       },
     },
+    {
+      type: 'view',
+      props: {
+        name: 'Layer 2',
+        style: {
+          height: 200,
+          position: 'absolute',
+          width: 200,
+          zIndex: 2,
+        },
+      },
+    },
   ],
 };
 
 describe('Compute Flex Tree', () => {
   it('correctly creates flex tree', () => {
     const yogaNode = computeYogaTree(treeRootStub, new Context());
-    yogaNode.calculateLayout(
-      yoga.UNDEFINED,
-      yoga.UNDEFINED,
-      yoga.DIRECTION_LTR
-    );
+    yogaNode.calculateLayout(yoga.UNDEFINED, yoga.UNDEFINED, yoga.DIRECTION_LTR);
     const tree = reactTreeToFlexTree(treeRootStub, yogaNode, new Context());
 
     expect(tree.children).toEqual([
@@ -89,6 +85,7 @@ describe('Compute Flex Tree', () => {
             width: 100,
             zIndex: 1,
           },
+          textNodes: undefined,
         },
         children: [],
       },
@@ -117,6 +114,7 @@ describe('Compute Flex Tree', () => {
             width: 200,
             zIndex: 2,
           },
+          textNodes: undefined,
         },
         children: [],
       },
@@ -145,6 +143,7 @@ describe('Compute Flex Tree', () => {
             width: 300,
             zIndex: 3,
           },
+          textNodes: undefined,
         },
         children: [],
       },

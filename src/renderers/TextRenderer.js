@@ -29,23 +29,23 @@ class TextRenderer extends SketchRenderer {
       });
     }
 
+    const frame = makeRect(0, 0, layout.width, layout.height);
+    const layer = makeTextLayer(frame, name, props.textNodes, props.resizingConstraint);
+
     if (props.shadowGroup) {
       const shadows = [];
       props.shadowGroup.map(shadowStyle =>
         shadows.push(makeShadow(shadowStyle))
       );
-      content.style.shadows = shadows;
+      layer.style.shadows = shadows;
     } else if (hasAnyDefined(style, SHADOW_STYLES)) {
       const shadow = [makeShadow(style)];
       if (style.shadowInner) {
-        content.style.innerShadows = shadow;
+        layer.style.innerShadows = shadow;
       } else {
-        content.style.shadows = shadow;
+        layer.style.shadows = shadow;
       }
     }
-
-    const frame = makeRect(0, 0, layout.width, layout.height);
-    const layer = makeTextLayer(frame, name, props.textNodes, props.resizingConstraint);
 
     const resolvedTextStyle = TextStyles.resolve(textStyle);
     if (resolvedTextStyle) {

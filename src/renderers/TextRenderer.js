@@ -39,12 +39,7 @@ class TextRenderer extends SketchRenderer {
       );
       layer.style.shadows = shadows;
     } else if (hasAnyDefined(style, SHADOW_STYLES)) {
-      const shadow = [makeShadow(style)];
-      if (style.shadowInner) {
-        layer.style.innerShadows = shadow;
-      } else {
-        layer.style.shadows = shadow;
-      }
+      layer.style.shadows = [makeShadow(style)];
     }
 
     const resolvedTextStyle = TextStyles.resolve(textStyle);

@@ -19,6 +19,12 @@ const makeTextLayer = (
   isVisible: true,
   layerListExpandedType: 0,
   name,
+  style: {
+    _class: 'style',
+    endDecorationType: 0,
+    miterLimit: 10,
+    startDecorationType: 0,
+  },
   nameIsFixed: false,
   resizingConstraint: makeResizeConstraint(resizingConstraint),
   resizingType: 0,

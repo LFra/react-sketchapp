@@ -4,6 +4,10 @@ import type { SketchLayer, ViewStyle, LayoutInfo, TextStyle } from '../types';
 import makeTextLayer from '../jsonUtils/textLayers';
 import { makeRect } from '../jsonUtils/models';
 import TextStyles from '../sharedStyles/TextStyles';
+import hasAnyDefined from '../utils/hasAnyDefined';
+import { makeTextShadow } from "../jsonUtils/style";
+
+const SHADOW_STYLES = ['textShadowOffset', 'textShadowRadius', 'textShadowColor'];
 
 class TextRenderer extends SketchRenderer {
   getDefaultGroupName(props: any) {
@@ -23,6 +27,21 @@ class TextRenderer extends SketchRenderer {
       props.textNodes.forEach((textNode) => {
         name += textNode.content;
       });
+    }
+
+    if (props.shadowGroup) {
+      const shadows = [];
+      props.shadowGroup.map(shadowStyle =>
+        shadows.push(makeTextShadow(shadowStyle))
+      );
+      content.style.shadows = shadows;
+    } else if (hasAnyDefined(style, SHADOW_STYLES)) {
+      const shadow = [makeTextShadow(style)];
+      if (style.shadowInner) {
+        content.style.innerShadows = shadow;
+      } else {
+        content.style.shadows = shadow;
+      }
     }
 
     const frame = makeRect(0, 0, layout.width, layout.height);

@@ -8,7 +8,7 @@ import {
   makeShapePath,
   makeShapeGroup,
 } from '../jsonUtils/shapeLayers';
-import type { Color, ViewStyle } from '../types';
+import type {Color, TextStyle, ViewStyle} from '../types';
 
 const DEFAULT_SHADOW_COLOR = '#000';
 
@@ -49,6 +49,29 @@ export const makeShadow = (style: ViewStyle): SJShadow => {
     isEnabled: true,
     blurRadius: radius,
     color: makeColorFromCSS(color, opacity),
+    contextSettings: {
+      _class: 'graphicsContextSettings',
+      blendMode: 0,
+      opacity: 1,
+    },
+    offsetX,
+    offsetY,
+    spread,
+  };
+};
+
+export const makeTextShadow = (style: TextStyle): SJShadow => {
+  const _class = 'shadow';
+  const color = style.textShadowColor || style.color || DEFAULT_SHADOW_COLOR;
+  const radius = style.textShadowRadius !== undefined ? style.textShadowRadius : 1;
+  const spread = 0;
+  const { width: offsetX = 0, height: offsetY = 0 } = style.textShadowOffset || {};
+
+  return {
+    _class,
+    isEnabled: true,
+    blurRadius: radius,
+    color: makeColorFromCSS(color),
     contextSettings: {
       _class: 'graphicsContextSettings',
       blendMode: 0,

@@ -8,7 +8,7 @@ import {
   makeShapePath,
   makeShapeGroup,
 } from '../jsonUtils/shapeLayers';
-import type {Color, TextStyle, ViewStyle} from '../types';
+import type { Color, TextStyle, ViewStyle } from '../types';
 
 const DEFAULT_SHADOW_COLOR = '#000';
 

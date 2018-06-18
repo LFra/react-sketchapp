@@ -5,7 +5,7 @@ import makeTextLayer from '../jsonUtils/textLayers';
 import { makeRect } from '../jsonUtils/models';
 import TextStyles from '../sharedStyles/TextStyles';
 import hasAnyDefined from '../utils/hasAnyDefined';
-import { makeShadow } from "../jsonUtils/style";
+import { makeShadow } from '../jsonUtils/style';
 
 const SHADOW_STYLES = ['shadowColor', 'shadowOffset', 'shadowOpacity', 'shadowRadius'];
 
@@ -34,9 +34,7 @@ class TextRenderer extends SketchRenderer {
 
     if (props.shadowGroup) {
       const shadows = [];
-      props.shadowGroup.map(shadowStyle =>
-        shadows.push(makeShadow(shadowStyle))
-      );
+      props.shadowGroup.map(shadowStyle => shadows.push(makeShadow(shadowStyle)));
       layer.style.shadows = shadows;
     } else if (hasAnyDefined(style, SHADOW_STYLES)) {
       layer.style.shadows = [makeShadow(style)];

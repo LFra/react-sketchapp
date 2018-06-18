@@ -5,6 +5,7 @@ node_modules
 react-example.sketchplugin
 _book
 .vscode
+.idea
 
 # only apps should have lockfiles
 yarn.lock

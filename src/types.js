@@ -74,7 +74,7 @@ export type ViewStyle = {
   shadowOpacity: number,
   shadowRadius: number,
   shadowSpread: number,
-  shadowInner: "innerShadow" | "shadow",
+  shadowInner: 'innerShadow' | 'shadow',
   width: number,
   height: number,
   top: number,
@@ -188,7 +188,7 @@ export type SketchShadow = {
   shadowOffset: { width: number, height: number },
   shadowSpread: number,
   shadowOpacity: number,
-  shadowRadius: number
+  shadowRadius: number,
 };
 
 export type SketchShadowGroup = Array<SketchShadow>;

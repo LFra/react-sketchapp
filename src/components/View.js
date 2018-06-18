@@ -22,7 +22,7 @@ const propTypes = {
   shadowGroup: PropTypes.arrayOf(
     PropTypes.shape({
       ...ShadowGroupPropTypes,
-    })
+    }),
   ),
   children: PropTypes.node,
 };

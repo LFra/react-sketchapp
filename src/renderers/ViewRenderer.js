@@ -9,7 +9,8 @@ import type {
   LayoutInfo,
   TextStyle,
   SketchShadowGroup,
-  ResizeConstraints, TreeNode,
+  ResizeConstraints,
+  TreeNode,
 } from '../types';
 import {
   makeBorderOptions,
@@ -62,7 +63,7 @@ class ViewRenderer extends SketchRenderer {
     style: ViewStyle,
     textStyle: TextStyle,
     // eslint-disable-next-line no-unused-vars
-    props: any
+    props: any,
   ): Array<SJShapeGroupLayer> {
     const layers = [];
     // NOTE(lmr): the group handles the position, so we just care about width/height here
@@ -115,9 +116,7 @@ class ViewRenderer extends SketchRenderer {
 
     if (props.shadowGroup) {
       const shadows = [];
-      props.shadowGroup.map(shadowStyle =>
-        shadows.push(makeShadow(shadowStyle))
-      );
+      props.shadowGroup.map(shadowStyle => shadows.push(makeShadow(shadowStyle)));
       content.style.shadows = shadows;
     } else if (hasAnyDefined(style, SHADOW_STYLES)) {
       const shadow = [makeShadow(style)];
